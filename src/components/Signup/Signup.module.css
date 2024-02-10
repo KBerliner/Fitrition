@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;700&family=Jura:wght@700&display=swap');
+
+form {
+    width: 30vw;
+    height: 500px;
+    position: absolute;
+    top: 50%;
+    margin-top: -250px;
+    left: 50%;
+    margin-left: -15vw;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 16px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+form > div {
+    margin-top: 4vw;
+    margin-bottom: 3vw;
+    width: 80%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+form > div > input[type="submit"] {
+    background-color: #9AEDFF;
+    border: 0;
+    color: black;
+}
+
+form > p > a {
+    color: #9AEDFF;
+}
