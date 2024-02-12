@@ -1,12 +1,20 @@
+// Importing Dependencies
+
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { hash } from 'bcryptjs';
+
+// Exporting the Signup Thunk
 
 export const signup = createAsyncThunk(
     'users/signup',
     async (reqBody) => {
         return new Promise((resolve, reject) => {
+
+            // Defining new XMLHttpsRequest
             let request = new XMLHttpRequest();
+
+            // Hashing the password for secure information transfer
     
             hash(reqBody.password, 10).then(
                 hash => {
@@ -15,6 +23,8 @@ export const signup = createAsyncThunk(
                         "email": reqBody.email,
                         "password": hash
                     }
+
+                    // Opening and Sending API request
     
                     request.open('POST', `${import.meta.env.VITE_API_URL}signup`);
                     request.setRequestHeader('Content-type', 'application/json');
@@ -22,6 +32,8 @@ export const signup = createAsyncThunk(
                 }
             )
     
+            // Returning the result of the Promise
+
             request.onreadystatechange = () => {
                 if (request.readyState === 4) {
                     if (request.status === 200 || request.status === 201) {
@@ -35,9 +47,13 @@ export const signup = createAsyncThunk(
     }
 )
 
+// Exporting the Users Slice
+
 export const usersSlice = createSlice({
     name: "user",
     initialState: {
+        // Setting initial state
+
         user: {
             username: "",
             userId: ""
@@ -47,6 +63,9 @@ export const usersSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+
+            // Handling Fulfilled API request
+            
             .addCase(signup.fulfilled, (state, action) => {
             state.hasError = false;
             state.isLoading = false;
@@ -56,10 +75,16 @@ export const usersSlice = createSlice({
                 localStorage.setItem('token', action.payload.token)
             }
             })
+
+            // Handling Pending API request
+
             .addCase(signup.pending, (state, action) => {
             state.hasError = false;
             state.isLoading = true;
             })
+            
+            // Handling Rejected API request
+
             .addCase(signup.rejected, (state, action) => {
             state.hasError = true;
             state.isLoading = false;
@@ -67,6 +92,6 @@ export const usersSlice = createSlice({
     }
 });
 
-export const { selectUserId } = (state) => state.user.userId;
+// Exporting the Users Reducer to the store
 
 export default usersSlice.reducer;
