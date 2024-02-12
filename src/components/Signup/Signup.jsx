@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import './Signup.module.css';
-import { Link, Navigate, redirect } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 import { signup } from '../../features/users/usersSlice';
@@ -69,6 +69,7 @@ export default function Login() {
     // Handling input in any field
 
     const handleInput = ({ target }, field) => {
+        console.log('test');
         field === 'username' ? setUsername(target.value)
         : field === 'email' ? setEmail(target.value)
         : field === 'password' ? setPassword(target.value)
@@ -93,15 +94,15 @@ export default function Login() {
             <form onSubmit={handleSubmit}>
                 <h1>Sign Up Here</h1>
                 <label htmlFor="username">Username</label>
-                <input ref={usernameInput} id="username" onChange={(e) => {handleInput(e, 'username')}} name="username" type="text" value={username} required></input>
+                <input data-testid="usernameInput" ref={usernameInput} id="username" onChange={(e) => {handleInput(e, 'username')}} name="username" type="text" value={username} required></input>
                 <label htmlFor="email">Email</label>
-                <input ref={emailInput} id="email" onChange={(e) => {handleInput(e, 'email')}} name="email" type="email" value={email} required></input>
+                <input data-testid="emailInput" ref={emailInput} id="email" onChange={(e) => {handleInput(e, 'email')}} name="email" type="email" value={email} required></input>
                 <label htmlFor="password">Password</label>
-                <input ref={passwordInput} id="password" onChange={(e) => {handleInput(e, 'password')}} name="password" type="password" value={password} required></input>
+                <input data-testid="passwordInput" ref={passwordInput} id="password" onChange={(e) => {handleInput(e, 'password')}} name="password" type="password" value={password} required></input>
                 <div>
                     <input name="remember" type="checkbox"></input>
                     <label htmlFor="remember">Remember Me</label>
-                    <input ref={submitButton} id="submit" className={disabled} name="submit" type="submit" disabled></input>
+                    <input data-testid="submitButton" ref={submitButton} id="submit" className={disabled} name="submit" type="submit" disabled></input>
                 </div>
                 <p>Already a user? <Link to="/login">Login here</Link></p>
             </form>
