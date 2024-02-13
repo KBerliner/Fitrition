@@ -113,7 +113,44 @@ describe('Form Submission', () => {
         })
 
         describe('password field', () => {
+            it('should correctly display value as a stateless element', async () => {
+                // Setup
+                const passwordInput = screen.getByTestId('passwordInput');
 
+                const text = 'example username';
+                
+                // Exercise
+                await userEvent.type(passwordInput, text);
+
+                // Verify
+                expect(passwordInput.value).toBe(text);
+                
+                // Cleanup
+                await userEvent.clear(passwordInput);
+            })
+
+            it('should invalidate script', async () => {
+                // Setup
+                const usernameInput = screen.getByTestId('usernameInput');
+                const emailInput = screen.getByTestId('emailInput');
+                const passwordInput = screen.getByTestId('passwordInput');
+                const submitButton = screen.getByTestId('submitButton');
+
+                const text = '<script>console.log(\'hacked\');</script>'
+
+                // Exercise
+                await userEvent.type(usernameInput, 'example username');
+                await userEvent.type(emailInput, 'example@gmail.com');
+                await userEvent.type(passwordInput, text);
+
+                // Verify
+                expect(submitButton.getAttributeNames().includes('disabled')).toBe(true);
+
+                // Cleanup
+                await userEvent.clear(usernameInput);
+                await userEvent.clear(emailInput);
+                await userEvent.clear(passwordInput);
+            })
         })
     })
 })
