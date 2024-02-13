@@ -81,7 +81,28 @@ describe('Form Submission', () => {
                 expect(usernameInput.value).toBe(text);
                 
                 // Cleanup
-                await userEvent.clear(screen.getByTestId('usernameInput'));
+                await userEvent.clear(usernameInput);
+            })
+
+            it('should invalidate script', async () => {
+                // Setup
+                const usernameInput = screen.getByTestId('usernameInput');
+                const emailInput = screen.getByTestId('emailInput');
+                const passwordInput = screen.getByTestId('passwordInput');
+                const submitButton = screen.getByTestId('submitButton');
+
+                const text = '<script>console.log(\'hacked\');</script>'
+
+                // Exercise
+                await userEvent.type(usernameInput, text);
+                await userEvent.type(emailInput, 'example@gmail.com');
+                await userEvent.type(passwordInput, 'passwordexample');
+
+                // Verify
+                expect(submitButton.getAttributeNames().includes('disabled')).toBe(true);
+
+                // Cleanup
+                await userEvent.clear(usernameInput);
             })
         })
 
