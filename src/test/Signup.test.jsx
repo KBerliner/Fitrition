@@ -58,6 +58,16 @@ describe('Form Submission', () => {
     })
 
     describe('input fields', () => {
-        
+        describe('username field', () => {
+
+        })
+
+        describe('email field', () => {
+
+        })
+
+        describe('password field', () => {
+            
+        })
     })
 })
