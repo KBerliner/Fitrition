@@ -57,6 +57,35 @@ describe('Form Submission', () => {
         expect(result).toBe(expected);
     })
 
+    it('should be submittable with valid content in all fields', async () => {
+        // Setup
+        render(
+            <Provider store={store}>
+                <BrowserRouter>
+                    <Signup />
+                </BrowserRouter>
+            </Provider>
+        );
+        
+        const usernameInput = screen.getByTestId('usernameInput');
+        const emailInput = screen.getByTestId('emailInput');
+        const passwordInput = screen.getByTestId('passwordInput');
+        const submitButton = screen.getByTestId('submitButton');
+
+        // Exercise
+        await userEvent.type(usernameInput, 'example username');
+        await userEvent.type(emailInput, 'example@gmail.com');
+        await userEvent.type(passwordInput, 'passwordexample');
+
+        // Verify
+        expect(submitButton.getAttributeNames().includes('disabled')).toBe(false);
+
+        // Cleanup
+        await userEvent.clear(usernameInput);
+        await userEvent.clear(emailInput);
+        await userEvent.clear(passwordInput);
+    })
+
     describe('input fields', () => {
         beforeEach(() => {
             render(
@@ -109,7 +138,113 @@ describe('Form Submission', () => {
         })
 
         describe('email field', () => {
+            it('should correctly display value as a stateless element', async () => {
+                // Setup
+                const emailInput = screen.getByTestId('passwordInput');
 
+                const text = 'example@gmail.com';
+                
+                // Exercise
+                await userEvent.type(emailInput, text);
+
+                // Verify
+                expect(emailInput.value).toBe(text);
+                
+                // Cleanup
+                await userEvent.clear(emailInput);
+            })
+
+            it('should invalidate anything other than a valid email format (x@y.z), testing x@y.', async () => {
+                // Setup
+                const usernameInput = screen.getByTestId('usernameInput');
+                const emailInput = screen.getByTestId('emailInput');
+                const passwordInput = screen.getByTestId('passwordInput');
+                const submitButton = screen.getByTestId('submitButton');
+
+                const text = 'example@gmail.'
+
+                // Exercise
+                await userEvent.type(usernameInput, 'example username');
+                await userEvent.type(emailInput, text);
+                await userEvent.type(passwordInput, 'passwordexample');
+
+                // Verify
+                expect(submitButton.getAttributeNames().includes('disabled')).toBe(true);
+
+                // Cleanup
+                await userEvent.clear(usernameInput);
+                await userEvent.clear(emailInput);
+                await userEvent.clear(passwordInput);
+            })
+
+            it('should invalidate anything other than a valid email format (x@y.z), testing xy.z', async () => {
+                // Setup
+                const usernameInput = screen.getByTestId('usernameInput');
+                const emailInput = screen.getByTestId('emailInput');
+                const passwordInput = screen.getByTestId('passwordInput');
+                const submitButton = screen.getByTestId('submitButton');
+
+                const text = 'examplegmail.com'
+
+                // Exercise
+                await userEvent.type(usernameInput, 'example username');
+                await userEvent.type(emailInput, text);
+                await userEvent.type(passwordInput, 'passwordexample');
+
+                // Verify
+                expect(submitButton.getAttributeNames().includes('disabled')).toBe(true);
+
+                // Cleanup
+                await userEvent.clear(usernameInput);
+                await userEvent.clear(emailInput);
+                await userEvent.clear(passwordInput);
+            })
+
+            it('should invalidate anything other than a valid email format (x@y.z), testing @y.z', async () => {
+                // Setup
+                const usernameInput = screen.getByTestId('usernameInput');
+                const emailInput = screen.getByTestId('emailInput');
+                const passwordInput = screen.getByTestId('passwordInput');
+                const submitButton = screen.getByTestId('submitButton');
+
+                const text = '@gmail.com'
+
+                // Exercise
+                await userEvent.type(usernameInput, 'example username');
+                await userEvent.type(emailInput, text);
+                await userEvent.type(passwordInput, 'passwordexample');
+
+                // Verify
+                expect(submitButton.getAttributeNames().includes('disabled')).toBe(true);
+
+                // Cleanup
+                await userEvent.clear(usernameInput);
+                await userEvent.clear(emailInput);
+                await userEvent.clear(passwordInput);
+            })
+
+            it('should invalidate anything other than a valid email format (x@y.z), testing x@yz', async () => {
+                // Setup
+                const usernameInput = screen.getByTestId('usernameInput');
+                const emailInput = screen.getByTestId('emailInput');
+                const passwordInput = screen.getByTestId('passwordInput');
+                const submitButton = screen.getByTestId('submitButton');
+
+                const text = 'example@gmailcom'
+
+                // Exercise
+                await userEvent.type(usernameInput, 'example username');
+                await userEvent.type(emailInput, text);
+                await userEvent.type(passwordInput, 'passwordexample');
+
+                // Verify
+                expect(submitButton.getAttributeNames().includes('disabled')).toBe(true);
+
+                // Cleanup
+                await userEvent.clear(usernameInput);
+                await userEvent.clear(emailInput);
+                await userEvent.clear(passwordInput);
+            })
         })
 
         describe('password field', () => {
@@ -117,7 +252,7 @@ describe('Form Submission', () => {
                 // Setup
                 const passwordInput = screen.getByTestId('passwordInput');
 
-                const text = 'example username';
+                const text = 'examplepassword';
                 
                 // Exercise
                 await userEvent.type(passwordInput, text);
