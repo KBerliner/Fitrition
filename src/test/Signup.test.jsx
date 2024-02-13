@@ -56,4 +56,8 @@ describe('Form Submission', () => {
         // Verify
         expect(result).toBe(expected);
     })
+
+    describe('input fields', () => {
+        
+    })
 })
