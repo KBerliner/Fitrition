@@ -69,7 +69,6 @@ export default function Login() {
     // Handling input in any field
 
     const handleInput = ({ target }, field) => {
-        console.log('test');
         field === 'username' ? setUsername(target.value)
         : field === 'email' ? setEmail(target.value)
         : field === 'password' ? setPassword(target.value)

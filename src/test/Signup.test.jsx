@@ -1,4 +1,4 @@
-import { describe, expect } from 'vitest';
+import { beforeEach, describe, expect } from 'vitest';
 import { fireEvent, getByText, render, screen } from '@testing-library/react';
 import Signup from '../components/Signup/Signup';
 import { Provider } from 'react-redux';
@@ -28,20 +28,20 @@ describe('control test', () => {
 })
 
 describe('Form Submission', () => {
-    render(
-        <Provider store={store}>
-            <BrowserRouter>
-                <Signup />
-            </BrowserRouter>
-        </Provider>
-    );
-    const submitBtn = screen.getByTestId('submitButton');
-    const usernameInput = screen.getByTestId('usernameInput');
-    const emailInput = screen.getByTestId('emailInput');
-    const passwordInput = screen.getByTestId('passwordInput');
-
     it('should initialize with no content in any fields and a disabled submit button', () => {
         // Setup
+        render(
+            <Provider store={store}>
+                <BrowserRouter>
+                    <Signup />
+                </BrowserRouter>
+            </Provider>
+        );
+        const submitBtn = screen.getByTestId('submitButton');
+        const usernameInput = screen.getByTestId('usernameInput');
+        const emailInput = screen.getByTestId('emailInput');
+        const passwordInput = screen.getByTestId('passwordInput');
+
         const expected = true;
         let result = false;
 
@@ -58,8 +58,31 @@ describe('Form Submission', () => {
     })
 
     describe('input fields', () => {
+        beforeEach(() => {
+            render(
+                <Provider store={store}>
+                    <BrowserRouter>
+                        <Signup />
+                    </BrowserRouter>
+                </Provider>
+            );
+        })
         describe('username field', () => {
+            it('should correctly display value as a stateless element', async () => {
+                // Setup
+                const usernameInput = screen.getByTestId('usernameInput');
 
+                const text = 'example username';
+                
+                // Exercise
+                await userEvent.type(usernameInput, text);
+
+                // Verify
+                expect(usernameInput.value).toBe(text);
+                
+                // Cleanup
+                await userEvent.clear(screen.getByTestId('usernameInput'));
+            })
         })
 
         describe('email field', () => {
@@ -67,7 +90,7 @@ describe('Form Submission', () => {
         })
 
         describe('password field', () => {
-            
+
         })
     })
 })
