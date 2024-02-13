@@ -1,10 +1,12 @@
 import { beforeEach, describe, expect } from 'vitest';
-import { fireEvent, getByText, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import Signup from '../components/Signup/Signup';
 import { Provider } from 'react-redux';
 import { store } from '../app/store';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+import App from '../App';
 
 describe('control test', () => {
     it('should pass', () => {
@@ -28,6 +30,7 @@ describe('control test', () => {
 })
 
 describe('Form Submission', () => {
+
     it('should initialize with no content in any fields and a disabled submit button', () => {
         // Setup
         render(
@@ -66,7 +69,7 @@ describe('Form Submission', () => {
                 </BrowserRouter>
             </Provider>
         );
-        
+
         const usernameInput = screen.getByTestId('usernameInput');
         const emailInput = screen.getByTestId('emailInput');
         const passwordInput = screen.getByTestId('passwordInput');
@@ -286,6 +289,29 @@ describe('Form Submission', () => {
                 await userEvent.clear(emailInput);
                 await userEvent.clear(passwordInput);
             })
+        })
+    })
+
+    describe('persistence check', () => {
+        it('should automatically navigate to the nutrition page if there\'s already a jwt', () => {
+            // Setup
+            localStorage.setItem('token', 'exampletoken');
+
+            render(
+                <Provider store={store}>
+                    <BrowserRouter>
+                        <App />
+                    </BrowserRouter>
+                </Provider>
+            );
+
+            // Verify
+            // console.log('HITHIT', localStorage.getItem('token'));
+            // screen.debug(null, Infinity);
+            expect(screen.getByTestId('nutrition')).toBeVisible();
+
+            // Cleanup
+            localStorage.removeItem('token');
         })
     })
 })

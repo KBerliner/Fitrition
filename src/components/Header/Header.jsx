@@ -8,7 +8,7 @@ export default function Header({ type }) {
         <>
         {
             type === 'nutrition' ?
-            <nav>
+            <nav data-testid={type}>
                 <button>Log a Meal</button>
                 <img class={styles.logo} alt="Fitrition Logo" src={fitrition}></img>
                 <img class={styles.profile} alt="Placeholder Profile Image" src={placeholderImage}></img>

@@ -106,7 +106,7 @@ export default function Login() {
                 <p>Already a user? <Link to="/login">Login here</Link></p>
             </form>
         :
-        <Navigate to="/nutrition" />
+        <Navigate data-testid="navigateElement" to="/nutrition" />
         }
         </>
     )
