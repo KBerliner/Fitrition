@@ -110,7 +110,7 @@ export const usersSlice = createSlice({
     extraReducers: (builder) => {
         builder
 
-            // Handling Fulfilled API request
+            // Handling Fulfilled Signup API request
             
             .addCase(signup.fulfilled, (state, action) => {
             state.hasError = false;
@@ -122,19 +122,42 @@ export const usersSlice = createSlice({
             }
             })
 
-            // Handling Pending API request
+            // Handling Pending Signup API request
 
             .addCase(signup.pending, (state, action) => {
             state.hasError = false;
             state.isLoading = true;
             })
             
-            // Handling Rejected API request
+            // Handling Rejected Signup API request
 
             .addCase(signup.rejected, (state, action) => {
             state.hasError = true;
             state.isLoading = false;
-        })
+            })
+
+            // Handling Fulfilled Login API request
+            .addCase(login.fulfilled, (state, action) => {
+                state.hasError = false;
+                state.isLoading = false;
+                state.user.username = action.payload.username;
+                state.user.userId = action.payload.userId;
+                if(localStorage) {
+                    localStorage.setItem('token', action.payload.token);
+                }
+            })
+
+            // Handling Pending Login API request
+            .addCase(login.pending, (state, action) => {
+                state.hasError = false;
+                state.isLoading = true;
+            })
+
+            // Handling Rejected Login API request
+            .addCase(login.rejected, (state, action) => {
+                state.hasError = true;
+                state.isLoading = false;
+            })
     }
 });
 
