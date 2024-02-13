@@ -103,6 +103,8 @@ describe('Form Submission', () => {
 
                 // Cleanup
                 await userEvent.clear(usernameInput);
+                await userEvent.clear(emailInput);
+                await userEvent.clear(passwordInput);
             })
         })
 
