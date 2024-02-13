@@ -38,6 +38,52 @@ export const signup = createAsyncThunk(
                 if (request.readyState === 4) {
                     if (request.status === 200 || request.status === 201) {
                         resolve(JSON.parse(request.response));
+                    } else if (JSON.parse(request.response).error.errors?.username?.kind === 'unique') {
+                        alert('The username must be unique!');
+                        reject(JSON.parse(request.response));
+                    } else if(JSON.parse(request.response).error.errors?.email?.kind === 'unique') {
+                        alert('The email must be unique!');
+                        reject(JSON.parse(request.response));
+                    } else {
+                        reject(JSON.parse(request.response));
+                    }
+                }
+            }
+        })
+    }
+)
+
+// Exporting the Login Thunk
+
+export const login = createAsyncThunk(
+    'users/login',
+    async (reqBody) => {
+        return new Promise((resolve, reject) => {
+            // Defining new XMLHttpsRequest
+            let request = new XMLHttpRequest();
+
+            // Hashing the password for secure information transfer
+            hash(reqBody.password, 10).then(
+                hash => {
+                    const user = {
+                        "email": reqBody.email,
+                        "password": hash
+                    }
+
+                    // Opening and Sending API request
+
+                    request.open('POST', `${import.meta.env.VITE_API_URL}login`);
+                    request.setRequestHeader('Content-type', 'application/json');
+                    request.send(JSON.stringify(user));
+                }
+            )
+
+            // Returning the result of the Promise
+
+            request.onreadystatechange = () => {
+                if (request.readyState === 4) {
+                    if (request.status === 200 || request.status === 201) {
+                        resolve(JSON.parse(request.response));
                     } else {
                         reject(JSON.parse(request.response));
                     }

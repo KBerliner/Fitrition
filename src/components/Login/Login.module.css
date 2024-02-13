@@ -2,11 +2,10 @@
 
 form {
     width: 30vw;
-    height: 32vw;
-    /* border: 2px solid rgba(0, 0, 0, 0.25); */
+    height: 500px;
     position: absolute;
     top: 50%;
-    margin-top: -16vw;
+    margin-top: -250px;
     left: 50%;
     margin-left: -15vw;
     font-family: 'Inter', sans-serif;
@@ -15,8 +14,34 @@ form {
     align-items: center;
     border-radius: 16px;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    background-color: rgba(240, 248, 255, 0.1);
 }
 
-form > h1 > strong {
+form > div {
+    margin-top: 4vw;
+    margin-bottom: 3vw;
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+form > div > input[type="submit"] {
+    background-color: #9AEDFF;
+    border: 0;
+    color: black;
+    cursor: pointer;
+    width: 6vw;
+    height: 3vw;
+    border-radius: 1vw;
+    font-size: 1.2vw;
+}
+
+form > div > input[type="submit"]:disabled {
+    background-color: rgba(74, 72, 72, 0.5);
+    color: rgba(123, 118, 118, 0.5);
+}
+
+form > p > a {
     color: #9AEDFF;
 }

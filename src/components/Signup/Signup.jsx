@@ -1,10 +1,10 @@
 // Importing Dependencies
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './Signup.module.css';
 import { Link, Navigate } from 'react-router-dom';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { signup } from '../../features/users/usersSlice';
 
 // Creating Function Component "Login"
@@ -18,6 +18,7 @@ export default function Login() {
     const [password, setPassword] = useState('');
 
     const [disabled, setDisabled] = useState('disabled');
+    const [stateUsername, setStateUsername] = useState(useSelector(state => state.users.user.username));
 
     const usernameInput = useRef(null);
     const emailInput = useRef(null);
@@ -37,8 +38,13 @@ export default function Login() {
         
         dispatch(signup(user));
 
-        return <Navigate to="/nutrition" />;
     }
+
+    // Redirecting after successful submission
+
+    useEffect(() => {
+        return stateUsername ? <Navigate to="/nutrition" /> : undefined
+    }, [stateUsername])
 
     // Regex patterns
 
@@ -99,8 +105,10 @@ export default function Login() {
                 <label htmlFor="password">Password</label>
                 <input data-testid="passwordInput" ref={passwordInput} id="password" onChange={(e) => {handleInput(e, 'password')}} name="password" type="password" value={password} required></input>
                 <div>
-                    <input name="remember" type="checkbox"></input>
-                    <label htmlFor="remember">Remember Me</label>
+                    <div>
+                        <input name="remember" type="checkbox"></input>
+                        <label htmlFor="remember">Remember Me</label>
+                    </div>
                     <input data-testid="submitButton" ref={submitButton} id="submit" className={disabled} name="submit" type="submit" disabled></input>
                 </div>
                 <p>Already a user? <Link to="/login">Login here</Link></p>
