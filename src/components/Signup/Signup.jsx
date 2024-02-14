@@ -6,6 +6,7 @@ import { Link, Navigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { signup } from "../../features/users/usersSlice";
+import { set } from "mongoose";
 
 // Creating Function Component "Login"
 
@@ -144,10 +145,6 @@ export default function Login() {
 							required
 						></input>
 						<div>
-							<div>
-								<input name="remember" type="checkbox"></input>
-								<label htmlFor="remember">Remember Me</label>
-							</div>
 							<input
 								data-testid="submitButton"
 								ref={submitButton}

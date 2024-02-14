@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../features/users/usersSlice";
 
@@ -41,6 +41,7 @@ export default function Login() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		console.log("HIT");
 
 		const user = {
 			email,
@@ -118,10 +119,6 @@ export default function Login() {
 							required
 						></input>
 						<div>
-							<div>
-								<input name="remember" type="checkbox"></input>
-								<label htmlFor="remember">Remember Me</label>
-							</div>
 							<input
 								data-testid="submitButton"
 								ref={submitButton}

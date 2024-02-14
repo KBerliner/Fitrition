@@ -2,7 +2,7 @@
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { compare, hash } from "bcryptjs";
+import { hash } from "bcryptjs";
 
 // Exporting the Signup Thunk
 
