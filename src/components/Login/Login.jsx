@@ -1,106 +1,145 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../features/users/usersSlice";
 
 export default function Login() {
-        // Assigning Variables
+	// Assigning Variables
 
-        const dispatch = useDispatch();
-        const [email, setEmail] = useState('');
-        const [password, setPassword] = useState('');
-    
-        const [disabled, setDisabled] = useState('disabled');
-        const [stateUsername, setStateUsername] = useState(useSelector(state => state.users.user.username));
-    
-        const emailInput = useRef(null);
-        const passwordInput = useRef(null);
-        const submitButton = useRef(null);
+	const dispatch = useDispatch();
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
 
-        // Handling input in any field
+	const [disabled, setDisabled] = useState("disabled");
+	const [stateUsername, setStateUsername] = useState(
+		useSelector((state) => state.users.user.username)
+	);
 
-    const handleInput = ({ target }, field) => {
-        field === 'password' ? setPassword(target.value)
-        : field === 'email' ? setEmail(target.value)
-        : console.error(`${field} is not a valid field.`);
-    
-        if (verifyAll()) {
-            submitButton.current.removeAttribute('disabled');
-            setDisabled('');
-        } else if (submitButton) {
-            submitButton.current.setAttribute('disabled', true);
-            setDisabled('disabled');
-        }
-    }
+	const emailInput = useRef(null);
+	const passwordInput = useRef(null);
+	const submitButton = useRef(null);
 
-    // Handling form submission
+	// Handling input in any field
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+	const handleInput = ({ target }, field) => {
+		field === "password"
+			? setPassword(target.value)
+			: field === "email"
+				? setEmail(target.value)
+				: console.error(`${field} is not a valid field.`);
 
-        const user = {
-            email,
-            password
-        }
-        
-        dispatch(login(user));
+		if (verifyAll()) {
+			submitButton.current.removeAttribute("disabled");
+			setDisabled("");
+		} else if (submitButton) {
+			submitButton.current.setAttribute("disabled", true);
+			setDisabled("disabled");
+		}
+	};
 
-    }
+	// Handling form submission
 
-    // Redirecting after successful submission
+	const handleSubmit = async (e) => {
+		e.preventDefault();
 
-    useEffect(() => {
-        return stateUsername ? <Navigate to="/nutrition" /> : undefined
-    }, [stateUsername])
+		const user = {
+			email,
+			password,
+		};
 
-    // Regex patterns
+		dispatch(login(user));
+	};
 
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const textPattern = /^(?!.*<script).*$/;
+	// Redirecting after successful submission
 
-    // Regex verification functions
+	useEffect(() => {
+		return stateUsername ? <Navigate to="/nutrition" /> : undefined;
+	}, [stateUsername]);
 
-    const verifyEmail = text => {
-        return emailPattern.test(text);
-    }
+	// Regex patterns
 
-    const verifyText = text => {
-        return textPattern.test(text)
-    }
+	const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	const textPattern = /^(?!.*<script).*$/;
 
-    // Verifying all fields and presence of content in all fields
+	// Regex verification functions
 
-    const verifyAll = () => {
-        return verifyEmail(emailInput.current.value)
-        && verifyText(passwordInput.current.value)
-        && emailInput.current.value
-        && passwordInput.current.value
-    }
-    
-    // Returning JSX component
+	const verifyEmail = (text) => {
+		return emailPattern.test(text);
+	};
 
-    return (
-        <>
-        {
-            // Checking if the user is already logged in for persistence
-            !localStorage.getItem('token') ?
-            <form onSubmit={handleSubmit}>
-                <h1>Login Here</h1>
-                <label htmlFor="email">Email</label>
-                <input data-testid="emailInput" ref={emailInput} id="email" onChange={(e) => {handleInput(e, 'email')}} name="email" type="email" value={email} required></input>
-                <label htmlFor="password">Password</label>
-                <input data-testid="passwordInput" ref={passwordInput} id="password" onChange={(e) => {handleInput(e, 'password')}} name="password" type="password" value={password} required></input>
-                <div>
-                    <div>
-                        <input name="remember" type="checkbox"></input>
-                        <label htmlFor="remember">Remember Me</label>
-                    </div>
-                    <input data-testid="submitButton" ref={submitButton} id="submit" className={disabled} name="submit" type="submit" disabled></input>
-                </div>
-                <p>Don't have an account? <Link to="/login">Sign up here</Link></p>
-            </form>
-        :
-        <Navigate data-testid="navigateElement" to="/nutrition" />
-        }
-        </>
-    )
+	const verifyText = (text) => {
+		return textPattern.test(text);
+	};
+
+	// Verifying all fields and presence of content in all fields
+
+	const verifyAll = () => {
+		return (
+			verifyEmail(emailInput.current.value) &&
+			verifyText(passwordInput.current.value) &&
+			emailInput.current.value &&
+			passwordInput.current.value
+		);
+	};
+
+	// Returning JSX component
+
+	return (
+		<>
+			{
+				// Checking if the user is already logged in for persistence
+				!localStorage.getItem("token") ? (
+					<form onSubmit={handleSubmit}>
+						<h1>Login Here</h1>
+						<label htmlFor="email">Email</label>
+						<input
+							data-testid="emailInput"
+							ref={emailInput}
+							id="email"
+							onChange={(e) => {
+								handleInput(e, "email");
+							}}
+							name="email"
+							type="email"
+							value={email}
+							required
+						></input>
+						<label htmlFor="password">Password</label>
+						<input
+							data-testid="passwordInput"
+							ref={passwordInput}
+							id="password"
+							onChange={(e) => {
+								handleInput(e, "password");
+							}}
+							name="password"
+							type="password"
+							value={password}
+							required
+						></input>
+						<div>
+							<div>
+								<input name="remember" type="checkbox"></input>
+								<label htmlFor="remember">Remember Me</label>
+							</div>
+							<input
+								data-testid="submitButton"
+								ref={submitButton}
+								id="submit"
+								className={disabled}
+								name="submit"
+								type="submit"
+								disabled
+							></input>
+						</div>
+						<p>
+							Don't have an account? <Link to="/signup">Sign up here</Link>
+						</p>
+					</form>
+				) : (
+					<Navigate data-testid="navigateElement" to="/nutrition" />
+				)
+			}
+		</>
+	);
 }
