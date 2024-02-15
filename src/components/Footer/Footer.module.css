@@ -1,0 +1,19 @@
+.footer_container {
+	width: 60%;
+	background-color: #9aedff;
+	position: fixed;
+	bottom: 40px;
+	left: 20%;
+	height: 8%;
+	display: grid;
+	place-content: center;
+	border-radius: 24px;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+h3 {
+	margin: 0;
+	color: black;
+	font-size: 24px;
+}
