@@ -1,0 +1,76 @@
+.menu_icon {
+	position: absolute;
+	top: 2vw;
+	left: 6vw;
+	display: flex;
+	flex-direction: column;
+	height: 60px;
+	width: 60px;
+	justify-content: space-around;
+	align-items: center;
+	cursor: pointer;
+	transition-duration: 0.25s;
+	transition-timing-function: cubic-bezier(0.31, 0.01, 0.66, 1.56);
+	z-index: 11;
+}
+
+.menu_icon > span {
+	width: 80%;
+	height: 4px;
+	display: inline-block;
+	background-color: aliceblue;
+	border-radius: 4px;
+	transition-duration: 0.2s;
+}
+
+.menu_icon:hover span:nth-child(1) {
+	transform: rotate(12deg);
+}
+
+.menu_icon:hover span:nth-child(3) {
+	transform: rotate(-8deg);
+}
+
+.menu_items {
+	margin: 0;
+	z-index: 10;
+	transition-duration: 0.25s;
+	transition-timing-function: cubic-bezier(0.31, 0.01, 0.66, 1.56);
+	backdrop-filter: blur(10px);
+	width: 0;
+}
+
+.showMenu {
+	position: fixed;
+	height: 100vw;
+	width: 20vw;
+	background-color: rgba(240, 248, 255, 0.35);
+	border-right: 1px solid rgba(240, 248, 255, 0.75);
+}
+
+.menu_icon_showing {
+	transform: translateX(10vw);
+}
+
+.menu_icon_showing > span:nth-child(1),
+.menu_icon_showing > span:nth-child(3) {
+	background-color: black;
+}
+
+.menu_icon_showing > span:nth-child(1),
+.menu_icon_showing:hover > span:nth-child(1) {
+	transform: rotate(-45deg);
+	transform-origin: top right;
+}
+
+.menu_icon_showing > span:nth-child(2),
+.menu_icon_showing:hover > span:nth-child(2) {
+	opacity: 0;
+}
+
+.menu_icon_showing > span:nth-child(3),
+.menu_icon_showing:hover > span:nth-child(3) {
+	transform: rotate(45deg);
+	transform-origin: bottom right;
+	margin-top: -20px;
+}

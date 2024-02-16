@@ -1,33 +1,37 @@
-@import url('https://fonts.googleapis.com/css2?family=Jura:wght@700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Jura:wght@700&display=swap");
 
 nav > button {
-    width: 12vw;
-    height: 60px;
-    top: 2vw;
-    left: 6vw;
-    position: absolute;
-    border-radius: 25px;
-    border: 0;
-    background-color: #9AEDFF;
-    font-family: 'jura', sans-serif;
-    color: #201616;
-    font-size: 16px;
-    font-weight: 700;
-  }
-  
-  nav > .logo {
-    position: absolute;
-    top: 2vw;
-    height: 60px;
-    width: 200px;
-    left: 50%;
-    margin-left: -100px
-  }
+	width: 12vw;
+	height: 60px;
+	top: 2vw;
+	left: 6vw;
+	position: absolute;
+	border-radius: 25px;
+	border: 0;
+	background-color: #9aedff;
+	font-family: "jura", sans-serif;
+	color: #201616;
+	font-size: 16px;
+	font-weight: 700;
+}
 
-  nav > .profile {
-    position: absolute;
-    top: 2vw;
-    height: 60px;
-    width: 60px;
-    right: 6vw;
-  }
+nav > .logo {
+	position: absolute;
+	top: 2vw;
+	height: 60px;
+	width: 200px;
+	left: 50%;
+	margin-left: -100px;
+}
+
+nav > .profile {
+	position: absolute;
+	top: 2vw;
+	height: 60px;
+	width: 60px;
+	right: 6vw;
+}
+
+nav > .hamburger_menu {
+	border: 2px solid red;
+}
