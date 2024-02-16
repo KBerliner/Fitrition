@@ -38,11 +38,15 @@
 	transition-timing-function: cubic-bezier(0.31, 0.01, 0.66, 1.56);
 	backdrop-filter: blur(10px);
 	width: 0;
+	padding: 12vh 0 0 4vw;
+	display: flex;
+	flex-direction: column;
+	overflow-y: scroll;
+	height: 88vh;
 }
 
 .showMenu {
 	position: fixed;
-	height: 100vw;
 	width: 20vw;
 	background-color: rgba(240, 248, 255, 0.35);
 	border-right: 1px solid rgba(240, 248, 255, 0.75);
@@ -73,4 +77,32 @@
 	transform: rotate(45deg);
 	transform-origin: bottom right;
 	margin-top: -20px;
+}
+
+.menu_item {
+	display: none;
+	color: black;
+	font-size: 2vw;
+	padding: 2vw 0;
+	transition-duration: 0.1s;
+}
+
+.menu_item_showing {
+	display: inline;
+	cursor: pointer;
+}
+
+.menu_item_showing::before {
+	transform: scaleY(0);
+	position: absolute;
+	left: 3vw;
+	content: "";
+	background-color: black;
+	height: 3vw;
+	width: 2px;
+	transition-duration: 0.2s;
+}
+
+.menu_item_showing:hover::before {
+	transform: scaleY(1);
 }
