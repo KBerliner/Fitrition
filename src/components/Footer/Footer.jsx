@@ -5,14 +5,15 @@ import { Link } from "react-router-dom";
 
 export default function Footer({ sendTo }) {
 	const handleClick = () => {
-		const destination = sendTo !== "fitness" ? "/fitness" : "/nutrition";
+		const destination =
+			sendTo !== "fitness" ? "/fitness/general" : "/nutrition";
 		console.log(destination);
 		return <Navigate to="/nutrition" />;
 	};
 
 	return (
 		<Link
-			to={sendTo !== "fitness" ? "/fitness" : "/nutrition"}
+			to={sendTo !== "fitness" ? "/fitness/general" : "/nutrition"}
 			className={styles.footer_container}
 		>
 			<h3>{sendTo[0].toUpperCase() + sendTo.slice(1)}</h3>

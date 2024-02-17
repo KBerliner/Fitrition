@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "./HamburgerMenu.module.css";
+import { useNavigate } from "react-router-dom";
 
 export default function ({ menuItems }) {
 	const [showMenu, setShowMenu] = useState(false);
@@ -7,6 +8,12 @@ export default function ({ menuItems }) {
 		{ name: "General" },
 		...menuItems,
 	]);
+
+	const navigate = useNavigate();
+
+	const handleClick = (name) => {
+		navigate(`/fitness/${name.toLowerCase()}`);
+	};
 
 	return (
 		<>
@@ -23,6 +30,9 @@ export default function ({ menuItems }) {
 					<li
 						className={`${styles.menu_item} ${showMenu ? styles.menu_item_showing : ""}`}
 						key={exercise.name}
+						onClick={() => {
+							handleClick(exercise.name);
+						}}
 					>
 						{exercise.name}
 					</li>
