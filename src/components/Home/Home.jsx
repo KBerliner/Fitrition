@@ -4,7 +4,7 @@ import { Navigate } from "react-router";
 import Footer from "../Footer/Footer";
 
 export default function Home({ type }) {
-	const token = localStorage ? localStorage.getItem("token") : undefined;
+	const expired = localStorage.getItem("expiration") <= new Date().getTime();
 
 	const menuItems = [
 		{
@@ -35,7 +35,7 @@ export default function Home({ type }) {
 
 	return (
 		<>
-			{token ? (
+			{!expired ? (
 				<div>
 					<Header type={type} menuItems={menuItems} />
 					<Footer sendTo={type} />

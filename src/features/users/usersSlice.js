@@ -112,6 +112,7 @@ export const usersSlice = createSlice({
 				state.user.workouts = action.payload.workouts;
 				if (localStorage) {
 					localStorage.setItem("token", action.payload.token);
+					localStorage.setItem("expiration", new Date().getTime() + 7200000);
 				}
 			})
 
@@ -137,6 +138,7 @@ export const usersSlice = createSlice({
 				state.user.userId = action.payload.userId;
 				if (localStorage) {
 					localStorage.setItem("token", action.payload.token);
+					localStorage.setItem("expiration", new Date().getTime() + 900000);
 				}
 			})
 
