@@ -4,7 +4,10 @@ import styles from "./WorkoutLog.module.css";
 export default function WorkoutLog() {
 	return (
 		<>
-			<h1>Log your Workout Here!</h1>
+			<form>
+				<label for="type">Type</label>
+				<select name="type"></select>
+			</form>
 		</>
 	);
 }
