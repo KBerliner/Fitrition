@@ -94,6 +94,8 @@ export const usersSlice = createSlice({
 		user: {
 			username: "",
 			userId: "",
+			token: "",
+			expiration: "",
 			workouts: [],
 		},
 		isLoading: false,
@@ -110,10 +112,8 @@ export const usersSlice = createSlice({
 				state.user.username = action.payload.username;
 				state.user.userId = action.payload.userId;
 				state.user.workouts = action.payload.workouts;
-				if (localStorage) {
-					localStorage.setItem("token", action.payload.token);
-					localStorage.setItem("expiration", new Date().getTime() + 7200000);
-				}
+				state.user.token = action.payload.token;
+				state.user.expiration = new Date().getTime() + 900000;
 			})
 
 			// Handling Pending Signup API request
@@ -136,10 +136,9 @@ export const usersSlice = createSlice({
 				state.isLoading = false;
 				state.user.username = action.payload.username;
 				state.user.userId = action.payload.userId;
-				if (localStorage) {
-					localStorage.setItem("token", action.payload.token);
-					localStorage.setItem("expiration", new Date().getTime() + 900000);
-				}
+				state.user.workouts = action.payload.workouts;
+				state.user.token = action.payload.token;
+				state.user.expiration = new Date().getTime() + 900000;
 			})
 
 			// Handling Pending Login API request

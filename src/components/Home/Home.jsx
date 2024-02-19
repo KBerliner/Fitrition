@@ -2,9 +2,11 @@ import React from "react";
 import Header from "../Header/Header";
 import { Navigate } from "react-router";
 import Footer from "../Footer/Footer";
+import { useSelector } from "react-redux";
 
 export default function Home({ type }) {
-	const expired = localStorage.getItem("expiration") <= new Date().getTime();
+	const expired =
+		useSelector((state) => state.users.user.expiration) <= new Date().getTime();
 
 	const menuItems = [
 		{

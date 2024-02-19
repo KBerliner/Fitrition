@@ -98,15 +98,16 @@ export default function Login() {
 
 	// Checking Token Expiration
 
-	const expired = localStorage.getItem("expiration") <= new Date().getTime();
+	const expired =
+		useSelector((state) => state.users.user.expiration) <= new Date().getTime();
 
 	// Returning JSX component
 
 	return (
 		<>
 			{
-				// Checking if the user is already logged in for persistence
-				!localStorage.getItem("token") || expired ? (
+				// Checking if the user is already logged or if the token is expired
+				!useSelector((state) => state.users.user.token) || expired ? (
 					<form onSubmit={handleSubmit}>
 						<h1>Sign Up Here</h1>
 						<label htmlFor="username">Username</label>

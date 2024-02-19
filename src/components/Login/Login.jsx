@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../features/users/usersSlice";
 
 export default function Login() {
 	// Assigning Variables
 
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -41,7 +42,6 @@ export default function Login() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log("HIT");
 
 		const user = {
 			email,
@@ -54,7 +54,7 @@ export default function Login() {
 	// Redirecting after successful submission
 
 	useEffect(() => {
-		return stateUsername ? <Navigate to="/nutrition" /> : undefined;
+		stateUsername ? navigate("/nutrition") : undefined;
 	}, [stateUsername]);
 
 	// Regex patterns
@@ -85,15 +85,16 @@ export default function Login() {
 
 	// Checking Token Expiration
 
-	const expired = localStorage.getItem("expiration") <= new Date().getTime();
+	const expired =
+		useSelector((state) => state.users.user.expiration) <= new Date().getTime();
 
 	// Returning JSX component
 
 	return (
 		<>
 			{
-				// Checking if the user is already logged in for persistence
-				!localStorage.getItem("token") || expired ? (
+				// Checking if the user is already logged in or if the token is expired
+				!useSelector((state) => state.users.user.token) || expired ? (
 					<form onSubmit={handleSubmit}>
 						<h1>Login Here</h1>
 						<label htmlFor="email">Email</label>
