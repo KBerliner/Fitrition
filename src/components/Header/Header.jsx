@@ -9,7 +9,7 @@ export default function Header({ type, menuItems }) {
 		<>
 			<nav data-testid={type}>
 				{type === "nutrition" ? (
-					<button>Log a Meal</button>
+					<button className={styles.log_meal_button}>Log a Meal</button>
 				) : (
 					<HamburgerMenu
 						menuItems={menuItems}

@@ -38,6 +38,15 @@ export default function ({ menuItems }) {
 					</li>
 				))}
 			</ul>
+			<div
+				className={`${styles.log_workout_button_container} ${showMenu ? styles.log_workout_button_container_showing : ""}`}
+			>
+				<button
+					className={`${styles.log_workout_button} ${showMenu ? styles.log_workout_button_showing : ""}`}
+				>
+					{showMenu ? "Log a Workout" : ""}
+				</button>
+			</div>
 		</>
 	);
 }

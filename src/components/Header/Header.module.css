@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Jura:wght@700&display=swap");
 
-nav > button {
+nav > .log_meal_button {
 	width: 12vw;
 	height: 60px;
 	top: 2vw;
