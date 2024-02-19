@@ -7,128 +7,251 @@ export default function WorkoutLog() {
 		useSelector((state) => state.users.user.workouts)
 	);
 
+	// Making Input Elements Stateless
+	const [type, setType] = useState(workouts[0]);
+	const [calBurned, setCalBurned] = useState(0);
+	const [date, setDate] = useState(new Date().toLocaleDateString("en-ca"));
+	const [startTime, setStartTime] = useState("");
+	const [endTime, setEndTime] = useState("");
+	const [feetClimbed, setFeetClimbed] = useState(0);
+	const [gradesArray, setGradesArray] = useState([]);
+	const [milesHiked, setMilesHiked] = useState(0);
+	const [elevationGain, setElevationGain] = useState(0);
+	const [poundsLifted, setPoundsLifted] = useState(0);
+	const [milesRan, setMilesRan] = useState(0);
+	const [avgPace, setAvgPace] = useState("");
+	const [floors, setFloors] = useState(0);
+	const [steps, setSteps] = useState(0);
+	const [avgHR, setAvgHR] = useState("");
+	const [yardsSwam, setYardsSwam] = useState(0);
+	const [stroke, setStroke] = useState("");
+	const [pool, setPool] = useState(false);
+	const [milesWalked, setMilesWalked] = useState(0);
+
+	// Selecting correct unique fields according to workout type
+
+	const renderFields = () => {
+		switch (type) {
+			case "climb":
+				return (
+					<>
+						<div>
+							<label htmlFor="feetClimbed">Feet Climbed:</label>
+							<input
+								type="number"
+								id="feetClimbed"
+								value={feetClimbed}
+								onChange={({ target }) => setFeetClimbed(target.value)}
+							/>
+						</div>
+						<div>
+							<label htmlFor="gradesArray">Grades Array:</label>
+							<input
+								type="text"
+								id="gradesArray"
+								value={gradesArray}
+								onChange={({ target }) => setGradesArray(target.value)}
+							/>
+						</div>
+					</>
+				);
+			case "run":
+				return (
+					<>
+						<div>
+							<label htmlFor="milesRan">Miles Ran:</label>
+							<input
+								type="number"
+								id="milesRan"
+								value={milesRan}
+								onChange={({ target }) => setMilesRan(target.value)}
+							/>
+						</div>
+						<div>
+							<label htmlFor="avgPace">Average Pace:</label>
+							<input
+								type="text"
+								id="avgPace"
+								value={avgPace}
+								onChange={({ target }) => setAvgPace(target.value)}
+							/>
+						</div>
+					</>
+				);
+			case "swim":
+				return (
+					<>
+						<div>
+							<label htmlFor="yardsSwam">Yards Swam:</label>
+							<input
+								type="number"
+								id="yardsSwam"
+								value={yardsSwam}
+								onChange={({ target }) => setYardsSwam(target.value)}
+							/>
+						</div>
+						<div>
+							<label htmlFor="stroke">Stroke:</label>
+							<input
+								type="text"
+								id="stroke"
+								value={stroke}
+								onChange={({ target }) => setStroke(target.value)}
+							/>
+						</div>
+						<div>
+							<label htmlFor="pool">Pool:</label>
+							<input
+								type="checkbox"
+								id="pool"
+								checked={pool}
+								onChange={({ target }) => setPool(target.checked)}
+							/>
+						</div>
+					</>
+				);
+			case "walk":
+				return (
+					<>
+						<div>
+							<label htmlFor="milesWalked">Miles Walked:</label>
+							<input
+								type="number"
+								id="milesWalked"
+								value={milesWalked}
+								onChange={({ target }) => setMilesWalked(target.value)}
+							/>
+						</div>
+					</>
+				);
+			case "hike":
+				return (
+					<>
+						<div>
+							<label htmlFor="milesHiked">Miles Hiked:</label>
+							<input
+								type="number"
+								id="milesHiked"
+								value={milesHiked}
+								onChange={({ target }) => setMilesHiked(target.value)}
+							/>
+						</div>
+						<div>
+							<label htmlFor="elevationGain">Elevation Gain:</label>
+							<input
+								type="number"
+								id="elevationGain"
+								value={elevationGain}
+								onChange={({ target }) => setElevationGain(target.value)}
+							/>
+						</div>
+					</>
+				);
+			case "lift":
+				return (
+					<>
+						<div>
+							<label htmlFor="poundsLifted">Pounds Lifted:</label>
+							<input
+								type="number"
+								id="poundsLifted"
+								value={poundsLifted}
+								onChange={({ target }) => setPoundsLifted(target.value)}
+							/>
+						</div>
+					</>
+				);
+			case "stairs":
+				return (
+					<>
+						<div>
+							<label htmlFor="floors">Floors:</label>
+							<input
+								type="number"
+								id="floors"
+								value={floors}
+								onChange={({ target }) => setFloors(target.value)}
+							/>
+						</div>
+						<div>
+							<label htmlFor="steps">Steps:</label>
+							<input
+								type="number"
+								id="steps"
+								value={steps}
+								onChange={({ target }) => setSteps(target.value)}
+							/>
+						</div>
+					</>
+				);
+			default:
+				return null;
+		}
+	};
+
+	// Submitting the Workout to the database
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+	};
+
+	// Checking if JWT is expired
+
 	const expired =
 		useSelector((state) => state.users.user.expiration) <= new Date().getTime();
+
+	// Return JSX element
 
 	return (
 		<>
 			{!expired ? (
-				<form>
-					<label htmlFor="type">Type</label>
-					<select name="type" id="type">
+				<form onSubmit={(e) => handleSubmit(e)}>
+					<label htmlFor="type">Type:</label>
+					<select
+						id="type"
+						value={type}
+						onChange={({ target }) => setType(target.value)}
+					>
 						{workouts.map((workout) => (
-							<option key={workout}>{workout}</option>
+							<option key={workout} value={workout}>
+								{workout}
+							</option>
 						))}
 					</select>
 
-					<label htmlFor="calBurned">Calories Burned</label>
+					<label htmlFor="calBurned">Calories Burned:</label>
 					<input
-						type="text"
+						type="number"
 						id="calBurned"
-						name="calBurned"
-						placeholder="Input2"
+						value={calBurned}
+						onChange={({ target }) => setCalBurned(target.value)}
 					/>
 
-					<label htmlFor="input3">Date</label>
-					<input type="text" id="date" name="date" placeholder="Input3" />
-
-					<label htmlFor="input4">Start Time</label>
-					<input type="text" id="input4" name="input4" placeholder="Input4" />
-
-					<label htmlFor="input5">End Time</label>
-					<input type="text" id="input5" name="input5" placeholder="Input5" />
-
-					<label htmlFor="input6">Feet Climbed</label>
-					<input type="text" id="input6" name="input6" placeholder="Input6" />
-
-					<label htmlFor="input7">Grades</label>
-					<input type="text" id="input7" name="input7" placeholder="Input7" />
-
-					<label htmlFor="input8">Miles Hiked</label>
-					<input type="text" id="input8" name="input8" placeholder="Input8" />
-
-					<label htmlFor="input9">Elevation Gain</label>
-					<input type="text" id="input9" name="input9" placeholder="Input9" />
-
-					<label htmlFor="input10">Pounds Lifted</label>
+					<label htmlFor="date">Date:</label>
 					<input
-						type="text"
-						id="input10"
-						name="input10"
-						placeholder="Input10"
+						type="date"
+						id="date"
+						value={date}
+						onChange={({ target }) => setDate(target.value)}
 					/>
 
-					<label htmlFor="input11">Miles Ran</label>
+					<label htmlFor="startTime">Start Time:</label>
 					<input
-						type="text"
-						id="input11"
-						name="input11"
-						placeholder="Input11"
+						type="time"
+						id="startTime"
+						value={startTime}
+						onChange={({ target }) => setStartTime(target.value)}
 					/>
 
-					<label htmlFor="input12">Average Pace</label>
+					<label htmlFor="endTime">End Time:</label>
 					<input
-						type="text"
-						id="input12"
-						name="input12"
-						placeholder="Input12"
+						type="time"
+						id="endTime"
+						value={endTime}
+						onChange={({ target }) => setEndTime(target.value)}
 					/>
-
-					<label htmlFor="input13">Floors</label>
-					<input
-						type="text"
-						id="input13"
-						name="input13"
-						placeholder="Input13"
-					/>
-
-					<label htmlFor="input14">Steps</label>
-					<input
-						type="text"
-						id="input14"
-						name="input14"
-						placeholder="Input14"
-					/>
-
-					<label htmlFor="input15">Average Heart Rate</label>
-					<input
-						type="text"
-						id="input15"
-						name="input15"
-						placeholder="Input15"
-					/>
-
-					<label htmlFor="input16">Yards Swam</label>
-					<input
-						type="text"
-						id="input16"
-						name="input16"
-						placeholder="Input16"
-					/>
-
-					<label htmlFor="input17">Stroke</label>
-					<input
-						type="text"
-						id="input17"
-						name="input17"
-						placeholder="Input17"
-					/>
-
-					<label htmlFor="input18">Pool</label>
-					<input
-						type="text"
-						id="input18"
-						name="input18"
-						placeholder="Input18"
-					/>
-
-					<label htmlFor="input19">Miles Walked</label>
-					<input
-						type="text"
-						id="input19"
-						name="input19"
-						placeholder="Input19"
-					/>
+					{renderFields()}
+					<input type="submit"></input>
 				</form>
 			) : (
 				<Navigate to="/login" />
