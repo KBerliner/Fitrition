@@ -15,6 +15,10 @@ export default function ({ menuItems }) {
 		navigate(`/fitness/${name.toLowerCase()}`);
 	};
 
+	const handleLog = () => {
+		console.log("handling");
+	};
+
 	return (
 		<>
 			<div
@@ -43,6 +47,7 @@ export default function ({ menuItems }) {
 			>
 				<button
 					className={`${styles.log_workout_button} ${showMenu ? styles.log_workout_button_showing : ""}`}
+					onClick={() => handleLog()}
 				>
 					{showMenu ? "Log a Workout" : ""}
 				</button>

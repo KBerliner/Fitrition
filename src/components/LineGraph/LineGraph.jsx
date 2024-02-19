@@ -2,7 +2,7 @@ import React from "react";
 import { AreaChart, Area, XAxis, ResponsiveContainer, YAxis } from "recharts";
 import styles from "./LineGraph.module.css";
 
-export default function ({ chartData, chartType }) {
+export default function LineGraph({ chartData, chartType }) {
 	// let date = new Date().toISOString();
 	// console.log(date.substring(0, 10));
 
