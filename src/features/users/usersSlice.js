@@ -94,6 +94,7 @@ export const usersSlice = createSlice({
 		user: {
 			username: "",
 			userId: "",
+			workouts: [],
 		},
 		isLoading: false,
 		hasError: false,
@@ -108,6 +109,7 @@ export const usersSlice = createSlice({
 				state.isLoading = false;
 				state.user.username = action.payload.username;
 				state.user.userId = action.payload.userId;
+				state.user.workouts = action.payload.workouts;
 				if (localStorage) {
 					localStorage.setItem("token", action.payload.token);
 				}
