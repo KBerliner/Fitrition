@@ -16,7 +16,7 @@ export default function ({ menuItems }) {
 	};
 
 	const handleLog = () => {
-		console.log("handling");
+		navigate("/log-workout");
 	};
 
 	return (
