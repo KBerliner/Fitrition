@@ -1,20 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 
 import { addWorkout } from "../../features/workouts/workoutsSlice";
 
 export default function WorkoutLog() {
-	const [workouts, setWorkouts] = useState(
+	const [userWorkouts, setWorkouts] = useState(
 		useSelector((state) => state.users.user.workouts)
 	);
+
 	const userId = useSelector((state) => state.users.user.userId);
 	const token = useSelector((state) => state.users.user.token);
 
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	// Making Input Elements Stateless
-	const [type, setType] = useState(workouts[0]);
+	const [type, setType] = useState(userWorkouts[0]);
 	const [calBurned, setCalBurned] = useState(0);
 	const [date, setDate] = useState(new Date().toLocaleDateString("en-ca"));
 	const [startTime, setStartTime] = useState("");
@@ -211,6 +213,8 @@ export default function WorkoutLog() {
 		};
 
 		dispatch(addWorkout(workoutObject));
+
+		navigate("/fitness");
 	};
 
 	// Checking if JWT is expired
@@ -229,8 +233,9 @@ export default function WorkoutLog() {
 						id="type"
 						value={type}
 						onChange={({ target }) => setType(target.value)}
+						required
 					>
-						{workouts.map((workout) => (
+						{userWorkouts.map((workout) => (
 							<option key={workout} value={workout}>
 								{workout}
 							</option>
@@ -251,6 +256,7 @@ export default function WorkoutLog() {
 						id="date"
 						value={date}
 						onChange={({ target }) => setDate(target.value)}
+						required
 					/>
 
 					<label htmlFor="startTime">Start Time:</label>
@@ -259,6 +265,7 @@ export default function WorkoutLog() {
 						id="startTime"
 						value={startTime}
 						onChange={({ target }) => setStartTime(target.value)}
+						required
 					/>
 
 					<label htmlFor="endTime">End Time:</label>
@@ -267,6 +274,7 @@ export default function WorkoutLog() {
 						id="endTime"
 						value={endTime}
 						onChange={({ target }) => setEndTime(target.value)}
+						required
 					/>
 					{renderFields()}
 					<input type="submit"></input>

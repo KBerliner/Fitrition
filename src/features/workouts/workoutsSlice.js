@@ -136,7 +136,6 @@ export const workoutsSlice = createSlice({
 				state.hasError = false;
 				state.isLoading = false;
 				// Update the state with the new workout
-				console.log(state.workouts);
 				state.workouts.push(action.payload);
 			})
 
