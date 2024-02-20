@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { Navigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate, useNavigate } from "react-router";
+import { addMeal } from "../../features/meals/mealsSlice";
 
 export default function MealLog() {
+	// Assigning Redux variables
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
 	// Making input elements stateless
 	const [date, setDate] = useState(new Date().toLocaleDateString("en-ca"));
 	const [time, setTime] = useState(
@@ -17,11 +22,36 @@ export default function MealLog() {
 	const [sodium, setSodium] = useState(0);
 	const [cholesterol, setCholesterol] = useState(0);
 
-	// Getting User Id for API request
+	// Getting User Id and Token for API request
 
-	const [userId, setUserId] = useState(
-		useSelector((state) => state.users.user.userId)
-	);
+	const userId = useSelector((state) => state.users.user.userId);
+
+	const token = useSelector((state) => state.users.user.token);
+
+	// Handling form submission
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+
+		const body = {
+			token,
+			userId,
+			date,
+			time,
+			calories,
+			protein,
+			carbs,
+			fats,
+			fiber,
+			sugar,
+			sodium,
+			cholesterol,
+		};
+
+		dispatch(addMeal(body));
+
+		navigate("/nutrition");
+	};
 
 	// Checking if JWT is expired
 
