@@ -26,6 +26,7 @@ export default function Header({ type, menuItems }) {
 				)}
 				<img className={styles.logo} alt="Fitrition Logo" src={fitrition}></img>
 				<img
+					onClick={() => navigate("/profile")}
 					className={styles.profile}
 					alt="Placeholder Profile Image"
 					src={placeholderImage}

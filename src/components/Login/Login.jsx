@@ -54,7 +54,7 @@ export default function Login() {
 	// Redirecting after successful submission
 
 	useEffect(() => {
-		stateUsername ? navigate("/nutrition") : undefined;
+		stateUsername !== "" ? navigate("/nutrition") : undefined;
 	}, [stateUsername]);
 
 	// Regex patterns
