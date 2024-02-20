@@ -1,11 +1,17 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router";
+
+import { addWorkout } from "../../features/workouts/workoutsSlice";
 
 export default function WorkoutLog() {
 	const [workouts, setWorkouts] = useState(
 		useSelector((state) => state.users.user.workouts)
 	);
+	const userId = useSelector((state) => state.users.user.userId);
+	const token = useSelector((state) => state.users.user.token);
+
+	const dispatch = useDispatch();
 
 	// Making Input Elements Stateless
 	const [type, setType] = useState(workouts[0]);
@@ -193,6 +199,18 @@ export default function WorkoutLog() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+
+		const workoutObject = {
+			type,
+			userId,
+			calBurned,
+			date,
+			startTime,
+			endTime,
+			token,
+		};
+
+		dispatch(addWorkout(workoutObject));
 	};
 
 	// Checking if JWT is expired

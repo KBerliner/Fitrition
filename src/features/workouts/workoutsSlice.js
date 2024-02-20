@@ -6,24 +6,22 @@ import { useSelector } from "react-redux";
 // Exporting the Add Workout thunk
 
 export const addWorkout = createAsyncThunk("workouts/add", async (reqBody) => {
+	const { token, ...body } = reqBody;
 	return new Promise((resolve, reject) => {
 		// Defining new XMLHttpRequest
 		let request = new XMLHttpRequest();
 
 		request.open("POST", `${import.meta.env.VITE_API_URL}workout/add`);
-		request.setRequestHeader(
-			"Authorization",
-			`Bearer ${useSelector((state) => state.users.user.token)}`
-		);
+		request.setRequestHeader("Authorization", `Bearer ${token}`);
 		request.setRequestHeader("Content-type", "application/json");
-		request.send(JSON.stringify(reqBody));
+		request.send(JSON.stringify(body));
 
 		request.onreadystatechange = () => {
 			if (request.readyState === 4) {
-				if (request.status === 200 || 201) {
+				if (request.status === 200 || request.status === 201) {
 					resolve(JSON.parse(request.response));
 				} else {
-					reject(JSON.parse(request.response));
+					reject(request.response);
 				}
 			}
 		};
@@ -35,6 +33,7 @@ export const addWorkout = createAsyncThunk("workouts/add", async (reqBody) => {
 export const changeWorkout = createAsyncThunk(
 	"workouts/change",
 	async (reqBody) => {
+		const { token, ...body } = reqBody;
 		return new Promise((resolve, reject) => {
 			// Defining new XMLHttpRequest
 			let request = new XMLHttpRequest();
@@ -43,17 +42,14 @@ export const changeWorkout = createAsyncThunk(
 				"PUT",
 				`${import.meta.env.VITE_API_URL}workout/change/${reqBody.id}`
 			);
-			request.setRequestHeader(
-				"Authorization",
-				`Bearer ${useSelector((state) => state.users.user.token)}`
-			);
+			request.setRequestHeader("Authorization", `Bearer ${token}`);
 			request.setRequestHeader("Content-type", "application/json");
 
-			request.send(reqBody.newWorkout);
+			request.send(body);
 
 			request.onreadystatechange = () => {
 				if (request.readyState === 4) {
-					if (request.status === 200 || 201) {
+					if (request.status === 200 || request.status === 201) {
 						resolve(JSON.parse(request.response));
 					} else {
 						reject(JSON.parse(request.response));
@@ -69,6 +65,7 @@ export const changeWorkout = createAsyncThunk(
 export const deleteWorkout = createAsyncThunk(
 	"workouts/delete",
 	async (reqBody) => {
+		const { token, ...body } = reqBody;
 		return new Promise((resolve, reject) => {
 			// Defining new XMLHttpRequest
 			let request = new XMLHttpRequest();
@@ -78,14 +75,13 @@ export const deleteWorkout = createAsyncThunk(
 				`${import.meta.env.VITE_API_URL}workout/delete/${reqBody.id}`
 			);
 			request.setRequestHeader("Content-type", "application/json");
-			request.setRequestHeader(
-				"Authorization",
-				`Bearer ${useSelector((state) => state.users.user.token)}`
-			);
+			request.setRequestHeader("Authorization", `Bearer ${token}`);
+
+			request.send();
 
 			request.onreadystatechange = () => {
 				if (request.readyState === 4) {
-					if (request.status === 200 || 201) {
+					if (request.status === 200 || request.status === 201) {
 						resolve(JSON.parse(request.response));
 					} else {
 						reject(JSON.parse(request.response));
@@ -99,20 +95,20 @@ export const deleteWorkout = createAsyncThunk(
 // Exporting the Get All Workouts thunk
 
 export const allWorkouts = createAsyncThunk("workouts/all", async (reqBody) => {
+	const { token, ...body } = reqBody;
 	return new Promise((resolve, reject) => {
 		// Defining new XMLHttpRequest
 		let request = new XMLHttpRequest();
 
 		request.open("GET", `${import.meta.env.VITE_API_URL}workout/all`);
 		request.setRequestHeader("Content-type", "application/json");
-		request.setRequestHeader(
-			"Authorization",
-			`Bearer ${useSelector((state) => state.users.user.token)}`
-		);
+		request.setRequestHeader("Authorization", `Bearer ${token}`);
+
+		request.send();
 
 		request.onreadystatechange = () => {
 			if (request.readyState === 4) {
-				if (request.status === 200 || 201) {
+				if (request.status === 200 || request.status === 201) {
 					resolve(JSON.parse(request.response));
 				} else {
 					reject(JSON.parse(request.response));
@@ -140,7 +136,8 @@ export const workoutsSlice = createSlice({
 				state.hasError = false;
 				state.isLoading = false;
 				// Update the state with the new workout
-				state.workouts.workouts.push(action.payload);
+				console.log(state.workouts);
+				state.workouts.push(action.payload);
 			})
 
 			// Handling Pending Workout Add API request
@@ -221,3 +218,7 @@ export const workoutsSlice = createSlice({
 			});
 	},
 });
+
+// Exporting the Workouts Reducer to the store
+
+export default workoutsSlice.reducer;
