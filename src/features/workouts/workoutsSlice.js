@@ -1,7 +1,6 @@
 // Importing Dependencies
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { useSelector } from "react-redux";
 
 // Exporting the Add Workout thunk
 
@@ -40,7 +39,7 @@ export const changeWorkout = createAsyncThunk(
 
 			request.open(
 				"PUT",
-				`${import.meta.env.VITE_API_URL}workout/change/${reqBody.id}`
+				`${import.meta.env.VITE_API_URL}workout/change/${body.id}`
 			);
 			request.setRequestHeader("Authorization", `Bearer ${token}`);
 			request.setRequestHeader("Content-type", "application/json");
@@ -72,7 +71,7 @@ export const deleteWorkout = createAsyncThunk(
 
 			request.open(
 				"DELETE",
-				`${import.meta.env.VITE_API_URL}workout/delete/${reqBody.id}`
+				`${import.meta.env.VITE_API_URL}workout/delete/${body.id}`
 			);
 			request.setRequestHeader("Content-type", "application/json");
 			request.setRequestHeader("Authorization", `Bearer ${token}`);
