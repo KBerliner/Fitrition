@@ -8,32 +8,7 @@ export default function Home({ type }) {
 	const expired =
 		useSelector((state) => state.users.user.expiration) <= new Date().getTime();
 
-	const menuItems = [
-		{
-			name: "Lifting",
-		},
-		{
-			name: "Climbing",
-		},
-		{
-			name: "Swimming",
-		},
-		{
-			name: "Running",
-		},
-		{
-			name: "Hiking",
-		},
-		{
-			name: "Yoga",
-		},
-		{
-			name: "Pilates",
-		},
-		{
-			name: "Biking",
-		},
-	];
+	const menuItems = useSelector((state) => state.users.user.workouts);
 
 	return (
 		<>

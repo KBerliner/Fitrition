@@ -4,10 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function ({ menuItems }) {
 	const [showMenu, setShowMenu] = useState(false);
-	const [exercises, setExercises] = useState([
-		{ name: "General" },
-		...menuItems,
-	]);
+	const [exercises, setExercises] = useState(["General", ...menuItems]);
 
 	const navigate = useNavigate();
 
@@ -33,12 +30,12 @@ export default function ({ menuItems }) {
 				{exercises.map((exercise) => (
 					<li
 						className={`${styles.menu_item} ${showMenu ? styles.menu_item_showing : ""}`}
-						key={exercise.name}
+						key={exercise}
 						onClick={() => {
-							handleClick(exercise.name);
+							handleClick(exercise);
 						}}
 					>
-						{exercise.name}
+						{exercise.charAt(0).toUpperCase() + exercise.slice(1)}
 					</li>
 				))}
 			</ul>
