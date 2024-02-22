@@ -48,14 +48,13 @@ export default function Login() {
 			password,
 		};
 
-		dispatch(login(user));
+		dispatch(login(user)).then((res) => {
+			// Redirecting after successful submission
+			if ((res.type = "users/login/fulfilled")) {
+				navigate("/nutrition");
+			}
+		});
 	};
-
-	// Redirecting after successful submission
-
-	useEffect(() => {
-		stateUsername !== "" ? navigate("/nutrition") : undefined;
-	}, [stateUsername]);
 
 	// Regex patterns
 
