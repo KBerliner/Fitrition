@@ -88,12 +88,12 @@ export const deleteMeal = createAsyncThunk("meals/delete", async (reqBody) => {
 // Exporting the Get All Meals thunk
 
 export const allMeals = createAsyncThunk("meals/all", async (reqBody) => {
-	const { token, ...body } = reqBody;
+	const { token } = reqBody;
 	return new Promise((resolve, reject) => {
 		// Defining new XMLHttpRequest
 		let request = new XMLHttpRequest();
 
-		request.open("GET", `${import.meta.env.VITE_API_URL}meal/all`);
+		request.open("GET", `${import.meta.env.VITE_API_URL}meal/`);
 		request.setRequestHeader("Content-type", "application/json");
 		request.setRequestHeader("Authorization", `Bearer ${token}`);
 

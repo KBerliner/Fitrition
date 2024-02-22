@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../features/users/usersSlice";
+import { allWorkouts } from "../../features/workouts/workoutsSlice";
+import { allMeals } from "../../features/meals/mealsSlice";
 
 export default function Login() {
 	// Assigning Variables
@@ -51,6 +53,9 @@ export default function Login() {
 		dispatch(login(user)).then((res) => {
 			// Redirecting after successful submission
 			if ((res.type = "users/login/fulfilled")) {
+				dispatch(allWorkouts({ token: res.payload.token })).then(() => {
+					dispatch(allMeals({ token: res.payload.token }));
+				});
 				navigate("/nutrition");
 			}
 		});

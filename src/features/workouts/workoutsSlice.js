@@ -94,7 +94,7 @@ export const deleteWorkout = createAsyncThunk(
 // Exporting the Get All Workouts thunk
 
 export const allWorkouts = createAsyncThunk("workouts/all", async (reqBody) => {
-	const { token, ...body } = reqBody;
+	const { token } = reqBody;
 	return new Promise((resolve, reject) => {
 		// Defining new XMLHttpRequest
 		let request = new XMLHttpRequest();
