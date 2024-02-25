@@ -37,12 +37,19 @@ export default function Home({ type }) {
 							menuItems.map((menuItem, index) => {
 								if (index < 4) {
 									return (
-										<LineGraph
-											key={index}
-											chartData={workoutHistory.filter(
-												(workout) => workout.type === menuItems[index]
-											)}
-										/>
+										<div>
+											<LineGraph
+												key={index}
+												chartData={workoutHistory.filter(
+													(workout) => workout.type === menuItems[index]
+												)}
+											/>
+											<h3>
+												{menuItem.charAt(0).toUpperCase() +
+													menuItem.slice(1) +
+													"s"}
+											</h3>
+										</div>
 									);
 								}
 							})

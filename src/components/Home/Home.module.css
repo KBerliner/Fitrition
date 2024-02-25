@@ -13,3 +13,15 @@
 	grid-template-rows: 1fr 1fr;
 	gap: 2vw;
 }
+
+.graph_grid_container > div {
+	text-align: center;
+}
+
+.graph_grid_container > div > div {
+	height: 85%;
+}
+
+.graph_grid_container > div > h3 {
+	color: white;
+}
