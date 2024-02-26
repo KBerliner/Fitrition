@@ -37,7 +37,7 @@ export default function Home({ type }) {
 							menuItems.map((menuItem, index) => {
 								if (index < 4) {
 									return (
-										<div>
+										<div key={index}>
 											<LineGraph
 												key={index}
 												chartData={workoutHistory.filter(

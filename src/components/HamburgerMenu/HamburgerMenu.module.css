@@ -33,6 +33,7 @@
 
 .menu_items {
 	margin: 0;
+	left: 0;
 	z-index: 10;
 	transition-duration: 0.25s;
 	transition-timing-function: cubic-bezier(0.31, 0.01, 0.66, 1.56);
@@ -43,10 +44,10 @@
 	flex-direction: column;
 	overflow-y: scroll;
 	height: 72vh;
+	position: fixed;
 }
 
 .showMenu {
-	position: fixed;
 	width: 20vw;
 	background-color: rgba(240, 248, 255, 0.35);
 	border-right: 1px solid rgba(240, 248, 255, 0.75);
