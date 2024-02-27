@@ -37,11 +37,24 @@ export default function WorkoutLog() {
 	const [pool, setPool] = useState(false);
 	const [milesWalked, setMilesWalked] = useState(0);
 
+	let workoutObject = {};
+
 	// Selecting correct unique fields according to workout type
 
 	const renderFields = () => {
 		switch (type) {
 			case "climb":
+				workoutObject = {
+					type,
+					userId,
+					calBurned,
+					date,
+					startTime,
+					endTime,
+					token,
+					feetClimbed,
+					gradesArray,
+				};
 				return (
 					<>
 						<div>
@@ -65,6 +78,17 @@ export default function WorkoutLog() {
 					</>
 				);
 			case "run":
+				workoutObject = {
+					type,
+					userId,
+					calBurned,
+					date,
+					startTime,
+					endTime,
+					token,
+					milesRan,
+					avgPace,
+				};
 				return (
 					<>
 						<div>
@@ -88,6 +112,18 @@ export default function WorkoutLog() {
 					</>
 				);
 			case "swim":
+				workoutObject = {
+					type,
+					userId,
+					calBurned,
+					date,
+					startTime,
+					endTime,
+					token,
+					yardsSwam,
+					stroke,
+					pool,
+				};
 				return (
 					<>
 						<div>
@@ -120,6 +156,16 @@ export default function WorkoutLog() {
 					</>
 				);
 			case "walk":
+				workoutObject = {
+					type,
+					userId,
+					calBurned,
+					date,
+					startTime,
+					endTime,
+					token,
+					milesWalked,
+				};
 				return (
 					<>
 						<div>
@@ -134,6 +180,17 @@ export default function WorkoutLog() {
 					</>
 				);
 			case "hike":
+				workoutObject = {
+					type,
+					userId,
+					calBurned,
+					date,
+					startTime,
+					endTime,
+					token,
+					milesHiked,
+					elevationGain,
+				};
 				return (
 					<>
 						<div>
@@ -157,6 +214,16 @@ export default function WorkoutLog() {
 					</>
 				);
 			case "lift":
+				workoutObject = {
+					type,
+					userId,
+					calBurned,
+					date,
+					startTime,
+					endTime,
+					token,
+					poundsLifted,
+				};
 				return (
 					<>
 						<div>
@@ -171,6 +238,17 @@ export default function WorkoutLog() {
 					</>
 				);
 			case "stairs":
+				workoutObject = {
+					type,
+					userId,
+					calBurned,
+					date,
+					startTime,
+					endTime,
+					token,
+					floors,
+					steps,
+				};
 				return (
 					<>
 						<div>
@@ -202,16 +280,6 @@ export default function WorkoutLog() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-
-		const workoutObject = {
-			type,
-			userId,
-			calBurned,
-			date,
-			startTime,
-			endTime,
-			token,
-		};
 
 		dispatch(addWorkout(workoutObject));
 

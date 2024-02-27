@@ -52,13 +52,17 @@ export default function Home({ type }) {
 			} else if (loadingWorkouts) {
 				return <h2>Loading...</h2>;
 			} else {
-				return <h2 className={styles.no_workouts}>No workouts logged yet!</h2>;
+				return <h2 className={styles.no_content}>No workouts logged yet!</h2>;
 			}
 		} else if (type === "nutrition") {
 			if (mealHistory.length > 0 && !loadingMeals) {
 				return (
 					<LineGraph chartData={sortedMealHistory} chartType="nutrition" />
 				);
+			} else if (loadingMeals) {
+				return <h2>Loading...</h2>;
+			} else {
+				return <h2 className={styles.no_content}>No meals logged yet!</h2>;
 			}
 		}
 	};

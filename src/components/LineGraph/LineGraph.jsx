@@ -82,23 +82,71 @@ export default function LineGraph({ chartData, chartType, generalData }) {
 	const renderCharts = () => {
 		switch (chartType) {
 			case "climb":
-				<div className={styles.chart_container}>
-					<ResponsiveContainer width="100%" height={300}>
-						<AreaChart
-							data={chartData.filter((workout) => workout.type === "climb")}
-						></AreaChart>
-					</ResponsiveContainer>
-				</div>;
+				return (
+					<div className={styles.chart_container_big}>
+						<ResponsiveContainer width="100%" height="100%">
+							<AreaChart
+								data={chartData.filter((workout) => workout.type === "climb")}
+							>
+								<XAxis dataKey="date" />
+								<YAxis />
+								<Tooltip />
+								<Area
+									type="monotone"
+									stroke={fillColors[0]}
+									dataKey="calBurned"
+								/>
+								<Area
+									type="monotone"
+									stroke={fillColors[1]}
+									dataKey="feetClimbed"
+								/>
+							</AreaChart>
+						</ResponsiveContainer>
+					</div>
+				);
 				break;
+
+			case "lift":
+				return (
+					<div className={styles.chart_container_big}>
+						<ResponsiveContainer width="100%" height="100%">
+							<AreaChart
+								data={chartData.filter((workout) => workout.type === "lift")}
+							>
+								<XAxis dataKey="date" />
+								<YAxis />
+								<Tooltip />
+								<Legend />
+								<Area
+									type="monotone"
+									stroke={fillColors[0]}
+									fill={fillColors[0]}
+									dataKey="calBurned"
+									stackId={2}
+								/>
+								<Area
+									type="monotone"
+									stroke={fillColors[1]}
+									fill={fillColors[1]}
+									dataKey="poundsLifted"
+									stackId={1}
+								/>
+							</AreaChart>
+						</ResponsiveContainer>
+					</div>
+				);
 
 			default:
 				undefined;
 		}
 	};
 
+	// console.log(renderCharts(), chartType);
+
 	return chartType === "general"
 		? renderGeneralCharts()
 		: chartType === "nutrition"
 			? renderNutritionCharts()
-			: undefined;
+			: renderCharts();
 }
