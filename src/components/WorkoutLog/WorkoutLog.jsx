@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import styles from "./WorkoutLog.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router";
 
@@ -214,7 +215,7 @@ export default function WorkoutLog() {
 
 		dispatch(addWorkout(workoutObject));
 
-		navigate("/fitness");
+		navigate("/fitness/general");
 	};
 
 	// Checking if JWT is expired

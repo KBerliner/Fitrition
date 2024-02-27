@@ -5,13 +5,13 @@
 }
 
 .graph_grid_container {
-	padding: 125px 0;
+	padding: 200px 0;
 	width: 80%;
 	height: 65vh;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	grid-template-rows: 1fr 1fr;
-	gap: 2vw;
+	gap: 20px;
 }
 
 .graph_grid_container > div {

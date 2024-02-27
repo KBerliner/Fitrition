@@ -18,7 +18,7 @@ export const addWorkout = createAsyncThunk("workouts/add", async (reqBody) => {
 		request.onreadystatechange = () => {
 			if (request.readyState === 4) {
 				if (request.status === 200 || request.status === 201) {
-					resolve(JSON.parse(request.response));
+					resolve({ ...JSON.parse(request.response), body });
 				} else {
 					reject(request.response);
 				}
@@ -135,7 +135,7 @@ export const workoutsSlice = createSlice({
 				state.hasError = false;
 				state.isLoading = false;
 				// Update the state with the new workout
-				state.workouts.push(action.payload);
+				state.workouts.push(action.payload.body);
 			})
 
 			// Handling Pending Workout Add API request

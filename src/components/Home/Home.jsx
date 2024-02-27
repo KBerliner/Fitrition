@@ -15,62 +15,54 @@ export default function Home({ type }) {
 	const workoutHistory = useSelector((state) => state.workouts.workouts);
 	const loadingWorkouts = useSelector((state) => state.workouts.isLoading);
 
+	// Sorting the workout history by date
+	const compareDates = (a, b) => {
+		const dateA = new Date(a.date);
+		const dateB = new Date(b.date);
+		return dateA - dateB;
+	};
+
+	const sortedWorkoutHistory = [...workoutHistory].sort(compareDates);
+
+	// Getting Nutrition Info
+
+	const mealHistory = useSelector((state) => state.meals.meals);
+	const loadingMeals = useSelector((state) => state.meals.isLoading);
+
 	// Deciding which graphs to display
 
-	let display =
-		type === "fitness"
-			? useParams().exercise
-			: type === "nutrition"
-				? "nutrition"
-				: undefined;
+	let display = useParams()?.exercise;
 
-	const renderGraphs = () => {
-		for (let i = 0; i < menuItems.length; i++) {
-			return (
-				<LineGraph
-					chartData={workoutHistory.filter(
-						(workout) => workout.type === menuItems[i]
-					)}
-				/>
-			);
+	// Rendering the correct data for the graphs
+
+	const render = () => {
+		if (type === "fitness") {
+			if (workoutHistory.length > 0 && !loadingWorkouts) {
+				return (
+					<LineGraph
+						chartData={sortedWorkoutHistory}
+						chartType={display}
+						generalData={menuItems}
+					/>
+				);
+			} else if (loadingWorkouts) {
+				return <h2>Loading...</h2>;
+			} else {
+				return <h2 className={styles.no_workouts}>No workouts logged yet!</h2>;
+			}
+		} else if (type === "nutrition") {
+			console.log("nutrition");
 		}
 	};
+
+	// Returning the JSX Component
 
 	return (
 		<>
 			{!expired ? (
 				<div className={styles.home_container}>
 					<Header type={type} menuItems={menuItems} />
-					<div className={styles.graph_grid_container}>
-						{workoutHistory.length > 0 &&
-						!loadingWorkouts &&
-						display === "general" ? (
-							menuItems.map((menuItem, index) => {
-								if (index < 4) {
-									return (
-										<div key={index}>
-											<LineGraph
-												key={index}
-												chartData={workoutHistory.filter(
-													(workout) => workout.type === menuItems[index]
-												)}
-												chartType={display}
-											/>
-											<h3>
-												{menuItem.charAt(0).toUpperCase() +
-													menuItem.slice(1) +
-													"s"}
-											</h3>
-										</div>
-									);
-								}
-							})
-						) : !loadingWorkouts ? (
-							<h2 className={styles.no_workouts}>No workouts logged yet!</h2>
-						) : (
-							<h2>Loading...</h2>
-						)}
-					</div>
+					<div className={styles.graph_grid_container}>{render()}</div>
 					<Footer sendTo={type} />
 				</div>
 			) : (
