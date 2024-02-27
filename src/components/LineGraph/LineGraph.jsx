@@ -12,6 +12,7 @@ import {
 import styles from "./LineGraph.module.css";
 
 export default function LineGraph({ chartData, chartType, generalData }) {
+	// Preset chart fill colors
 	const fillColors = ["#66b3a1", "#8266b3", "#c26193", "#c9b667"];
 
 	const renderGeneralCharts = () => {
@@ -42,6 +43,42 @@ export default function LineGraph({ chartData, chartType, generalData }) {
 		});
 	};
 
+	const renderNutritionCharts = () => {
+		return (
+			<div className={styles.chart_container_big}>
+				<ResponsiveContainer width="100%" height="100%">
+					<AreaChart data={chartData}>
+						<XAxis dataKey="date" />
+						<YAxis />
+						<Tooltip />
+						<Legend />
+						<Area
+							type="monotone"
+							dataKey="calories"
+							stroke={fillColors[0]}
+							fill={fillColors[0]}
+							stackId="3"
+						/>
+						<Area
+							type="monotone"
+							dataKey="protein"
+							stroke={fillColors[1]}
+							fill={fillColors[1]}
+							stackId={2}
+						/>
+						<Area
+							type="monotone"
+							dataKey="carbs"
+							stroke={fillColors[2]}
+							fill={fillColors[2]}
+							stackId={2}
+						/>
+					</AreaChart>
+				</ResponsiveContainer>
+			</div>
+		);
+	};
+
 	const renderCharts = () => {
 		switch (chartType) {
 			case "climb":
@@ -59,5 +96,9 @@ export default function LineGraph({ chartData, chartType, generalData }) {
 		}
 	};
 
-	return chartType === "general" ? renderGeneralCharts() : undefined;
+	return chartType === "general"
+		? renderGeneralCharts()
+		: chartType === "nutrition"
+			? renderNutritionCharts()
+			: undefined;
 }

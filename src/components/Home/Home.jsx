@@ -29,6 +29,10 @@ export default function Home({ type }) {
 	const mealHistory = useSelector((state) => state.meals.meals);
 	const loadingMeals = useSelector((state) => state.meals.isLoading);
 
+	// Sorting the meal history by date
+
+	const sortedMealHistory = [...mealHistory].sort(compareDates);
+
 	// Deciding which graphs to display
 
 	let display = useParams()?.exercise;
@@ -51,7 +55,11 @@ export default function Home({ type }) {
 				return <h2 className={styles.no_workouts}>No workouts logged yet!</h2>;
 			}
 		} else if (type === "nutrition") {
-			console.log("nutrition");
+			if (mealHistory.length > 0 && !loadingMeals) {
+				return (
+					<LineGraph chartData={sortedMealHistory} chartType="nutrition" />
+				);
+			}
 		}
 	};
 
